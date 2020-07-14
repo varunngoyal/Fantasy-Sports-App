@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UsernameActivity">
+
+    <LinearLayout
+        android:id="@+id/LL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerVertical="true">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enter a username of your choice"
+        android:textSize="20dp"
+        android:textColor="#000"
+        android:layout_marginHorizontal="10dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="(Minimum of 4 characters are required.)"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="10dp"/>
+
+        <TextView
+            android:id="@+id/txt_uname_available"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Username Available!"
+            android:textColor="#00FF00"
+            android:textSize="18dp"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="10dp"
+            android:textAlignment="textEnd"
+            android:gravity="end"
+            android:visibility="invisible" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/LL"
+        >
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/LL"
+            android:hint="Enter a unique username"
+            android:layout_marginHorizontal="10dp"
+            android:layout_weight="8"
+            />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:visibility="invisible"
+            />
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/signUp"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sign Up"
+        android:layout_margin="10dp"
+        android:textSize="20dp"
+        android:background="#1CCF23"
+        android:textColor="#FFF"
+        android:textAllCaps="false"
+        />
+
+
+
+</RelativeLayout>

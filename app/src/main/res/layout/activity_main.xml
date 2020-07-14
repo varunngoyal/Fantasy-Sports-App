@@ -19,32 +19,78 @@
             android:layout_height="wrap_content"
             android:text="Login or SignUp"
             android:paddingLeft="10dp"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:textColor="#000"
             />
 
-        <EditText
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Mobile No."
-            android:inputType="number"
-            android:layout_margin="10dp"/>
+            android:layout_margin="10dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="+91"
+                android:textAlignment="center"
+                android:textColor="#000"
+                android:textSize="20sp"
+                android:layout_weight="2"
+                android:gravity="center_horizontal" />
+
+
+            <EditText
+                android:id="@+id/edit_mobile"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="Enter your 10-digit Mobile No."
+                android:inputType="number"
+                android:layout_weight="8"
+                android:maxLength="10"
+                />
+
+
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="or"
             android:textSize="20dp"
-            android:layout_gravity="center_horizontal"/>
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"/>
+
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/sign_in_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"/>
 
 
     </LinearLayout>
 
 
     <Button
+        android:id="@+id/request_otp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="Continue"/>
+        android:text="Continue"
+        android:textSize="20dp"
+        android:background="#1CCF23"
+        android:textColor="#FFF"
+        android:textAllCaps="false"/>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/LL"
+
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible"
+        android:padding="10dp"
+        />
+
 
 </RelativeLayout>
