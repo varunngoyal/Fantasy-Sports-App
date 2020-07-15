@@ -5,15 +5,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.service.autofill.FieldClassification;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.vaavdevelopers.fantasysportsapp.adapters.MatchEventListAdapter;
@@ -24,10 +27,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class MatchesActivity extends AppCompatActivity {
+public class MatchesActivity extends AppCompatActivity implements MatchEventListAdapter.OnMatchClickListener {
 
+    private static final String TAG = "MatchesActivity";
     private static final String PREFERENCES_APP = "AllPrefs";
     ArrayList<MatchEvent> matchesArrayList;
+    ArrayList<String> matchesIds;
     /*MatchEvent dummy;
     Date date;
     SimpleDateFormat ft;
@@ -43,6 +48,7 @@ public class MatchesActivity extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         matchesArrayList = new ArrayList<>();
+        matchesIds = new ArrayList<>();
         welcomeUser = findViewById(R.id.welcome_user);
 
         matchesRecyclerView = findViewById(R.id.list_matches);
@@ -76,18 +82,21 @@ public class MatchesActivity extends AppCompatActivity {
 
                     Toast.makeText(MatchesActivity.this, "fetching successful!", Toast.LENGTH_SHORT).show();
 
+                    for(DocumentSnapshot snapshot : task.getResult()) {
+                        matchesIds.add(snapshot.getId());
+                        Toast.makeText(MatchesActivity.this,
+                                "matchesId: "+snapshot.getId(), Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "matchesId: "+snapshot.getId());
+                    }
+
                     for(MatchEvent match : task.getResult().toObjects(MatchEvent.class)) {
                         Toast.makeText(MatchesActivity.this,
                                 match.toString(), Toast.LENGTH_SHORT).show();
 
                         matchesArrayList.add(match);
-                        String added_content = matchesArrayList.get(matchesArrayList.size() - 1).toString();
-                        Toast.makeText(MatchesActivity.this,
-                                "added content: "+added_content, Toast.LENGTH_SHORT).show();
-
-                        matchesRecyclerView.setLayoutManager(new LinearLayoutManager(MatchesActivity.this));
-                        matchesRecyclerView.setAdapter(new MatchEventListAdapter(matchesArrayList));
                     }
+                    matchesRecyclerView.setLayoutManager(new LinearLayoutManager(MatchesActivity.this));
+                    matchesRecyclerView.setAdapter(new MatchEventListAdapter(matchesArrayList, MatchesActivity.this));
 
                 } else {
                     Toast.makeText(MatchesActivity.this,
@@ -95,8 +104,14 @@ public class MatchesActivity extends AppCompatActivity {
                 }
             }
         });
+    }
 
+    @Override
+    public void onMatchClick(int position) {
 
+        Intent intent = new Intent(MatchesActivity.this, TeamActivity.class);
+        intent.putExtra("MatchId", matchesIds.get(position));
+        startActivity(intent);
 
     }
 }

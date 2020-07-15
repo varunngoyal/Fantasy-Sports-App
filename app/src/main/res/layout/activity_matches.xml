@@ -12,9 +12,6 @@
         android:layout_height="100dp"
         android:background="#fff">
 
-
-
-
         <ImageView
             android:layout_width="0dp"
             android:layout_weight="2"
@@ -31,20 +28,20 @@
             android:textColor="#000"
             android:textSize="20dp"
             android:layout_weight="8"
-            android:gravity="center"
+            android:gravity="center_vertical"
+            android:padding="10dp"
             />
     </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/LL"
-        >
+        android:layout_below="@id/LL">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list_matches"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
+            android:layout_height="match_parent" />
 
     </ScrollView>
 
