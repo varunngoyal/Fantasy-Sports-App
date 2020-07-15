@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "164441379933",
+    "firebase_url": "https://fantasy-sports-a-1594688845599.firebaseio.com",
+    "project_id": "fantasy-sports-a-1594688845599",
+    "storage_bucket": "fantasy-sports-a-1594688845599.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:164441379933:android:8c66c2670fe2dac8c8e9b4",
+        "android_client_info": {
+          "package_name": "com.vaavdevelopers.fantasysportsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "164441379933-4ivplhtj07g5f55jm4j6ep4nv1ajs8h0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBwujxbDKDNzh8AsrFkP0cIRGZ0CbUTOxs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "164441379933-4ivplhtj07g5f55jm4j6ep4nv1ajs8h0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
