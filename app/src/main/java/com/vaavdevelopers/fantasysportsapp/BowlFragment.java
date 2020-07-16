@@ -1,15 +1,18 @@
 package com.vaavdevelopers.fantasysportsapp;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,11 +30,13 @@ import static com.vaavdevelopers.fantasysportsapp.TeamActivity.matchId;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BowlFragment extends Fragment {
+public class BowlFragment extends Fragment implements TeamPlayerAdapter.onTeamPlayerClickListener {
 
     RecyclerView recyclerView;
     TeamPlayerAdapter teamPlayerAdapter;
     FirebaseFirestore db;
+    Drawable typeIcon;
+
 
     public BowlFragment() {
         // Required empty public constructor
@@ -47,6 +52,15 @@ public class BowlFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),
                 RecyclerView.VERTICAL, false));
+
+        typeIcon = getResources().getDrawable(R.drawable.cricket_ball, null);
+
+        DividerItemDecoration dividerItemDecoration =
+                new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+
+        dividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.recyclerview_divider));
+        recyclerView.addItemDecoration(dividerItemDecoration);
+
         db = FirebaseFirestore.getInstance();
 
         db.collection("matches")
@@ -62,7 +76,7 @@ public class BowlFragment extends Fragment {
                     for( TeamPlayer player : task.getResult().toObjects(TeamPlayer.class)) {
                         playerArrayList1.add(player);
                     }
-                    teamPlayerAdapter = new TeamPlayerAdapter(playerArrayList1);
+                    teamPlayerAdapter = new TeamPlayerAdapter(playerArrayList1,typeIcon, BowlFragment.this);
                     recyclerView.setAdapter(teamPlayerAdapter);
 
                 }  else {
@@ -74,5 +88,10 @@ public class BowlFragment extends Fragment {
 
 
         return view;
+    }
+
+    @Override
+    public void onTeamPlayerClick(int position) {
+        Toast.makeText(getContext(), position+" Clicked!", Toast.LENGTH_SHORT).show();
     }
 }

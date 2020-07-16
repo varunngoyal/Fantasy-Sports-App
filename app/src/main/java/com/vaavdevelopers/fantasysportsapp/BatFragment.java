@@ -1,15 +1,18 @@
 package com.vaavdevelopers.fantasysportsapp;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,6 +23,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.vaavdevelopers.fantasysportsapp.adapters.TeamPlayerAdapter;
 import com.vaavdevelopers.fantasysportsapp.models.TeamPlayer;
 
+
 import java.util.ArrayList;
 
 import static com.vaavdevelopers.fantasysportsapp.TeamActivity.matchId;
@@ -27,11 +31,12 @@ import static com.vaavdevelopers.fantasysportsapp.TeamActivity.matchId;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BatFragment extends Fragment {
+public class BatFragment extends Fragment implements TeamPlayerAdapter.onTeamPlayerClickListener{
 
     RecyclerView recyclerView;
     TeamPlayerAdapter teamPlayerAdapter;
     FirebaseFirestore db;
+    Drawable typeIcon;
 
     public BatFragment() {
         // Required empty public constructor
@@ -48,6 +53,16 @@ public class BatFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),
                 RecyclerView.VERTICAL, false));
+
+        typeIcon = getResources().getDrawable(R.drawable.bat_icon, null);
+
+        DividerItemDecoration dividerItemDecoration =
+                new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+
+        dividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.recyclerview_divider,
+                null));
+        recyclerView.addItemDecoration(dividerItemDecoration);
+
         db = FirebaseFirestore.getInstance();
 
         db.collection("matches")
@@ -63,7 +78,7 @@ public class BatFragment extends Fragment {
                     for( TeamPlayer player : task.getResult().toObjects(TeamPlayer.class)) {
                         playerArrayList1.add(player);
                     }
-                    teamPlayerAdapter = new TeamPlayerAdapter(playerArrayList1);
+                    teamPlayerAdapter = new TeamPlayerAdapter(playerArrayList1, typeIcon, BatFragment.this);
                     recyclerView.setAdapter(teamPlayerAdapter);
 
                 }  else {
@@ -74,5 +89,10 @@ public class BatFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onTeamPlayerClick(int position) {
+        Toast.makeText(getContext(), position+" Clicked!", Toast.LENGTH_SHORT).show();
     }
 }
