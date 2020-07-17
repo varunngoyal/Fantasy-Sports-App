@@ -9,31 +9,57 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.vaavdevelopers.fantasysportsapp.models.MatchEvent;
 import com.vaavdevelopers.fantasysportsapp.models.TeamPlayer;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class TeamActivity extends AppCompatActivity {
 
     public static FirebaseFirestore db;
     public static String matchId;
+    private TextView team1, team2, time_of_match;
+    private MatchEvent singleMatch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_team);
 
-        matchId = getIntent().getStringExtra("MatchId");
         db = FirebaseFirestore.getInstance();
+        //set the POJO header
+        team1 = findViewById(R.id.txtTeam1);
+        team2 = findViewById(R.id.txtTeam2);
+        time_of_match = findViewById(R.id.timestamp_match);
+
+
+        Intent intent = getIntent();
+        matchId = intent.getStringExtra("MatchId");
+        singleMatch = intent.getParcelableExtra("MatchObject");
+
+        Timestamp timeStamp = singleMatch.getTime_of_match();
+
+        Date date = timeStamp.toDate();
+        SimpleDateFormat sf = new SimpleDateFormat("MMMM dd, yyyy HH:mm:ss");
+        String timestampStr = sf.format(date);
+
+        time_of_match.setText(timestampStr);
+        team1.setText(singleMatch.getTeam1());
+        team2.setText(singleMatch.getTeam2());
 
         initViewPager();
     }
@@ -50,6 +76,7 @@ public class TeamActivity extends AppCompatActivity {
 
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
+        viewPager.setOffscreenPageLimit(3);
 
     }
 

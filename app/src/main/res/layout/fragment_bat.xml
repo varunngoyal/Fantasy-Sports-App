@@ -6,8 +6,20 @@
     tools:context=".BatFragment"
     android:layout_marginTop="5dp">
 
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select 3-6 batsmen"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textColor="#000"
+        android:background="#dddddd"
+        android:padding="5dp"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview"
+        android:layout_below="@id/description"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />

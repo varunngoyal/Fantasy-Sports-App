@@ -50,6 +50,7 @@
         android:layout_weight="1"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_add_black_24dp"
+        android:background="@color/design_default_color_background"
 
         />
 

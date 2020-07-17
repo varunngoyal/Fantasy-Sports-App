@@ -6,9 +6,28 @@
     android:layout_height="match_parent"
     tools:context=".TeamActivity">
 
+    <include
+        layout="@layout/content_matchview_team"
+        android:id="@+id/matchview"
+
+        />
+
+    <TextView
+        android:id="@+id/textSelectedItems"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/matchview"
+        android:text="0/11 selected"
+        android:padding="2dp"
+        android:textSize="20dp"
+        android:textColor="#FFFFFF"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:background="#0000FF"/>
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/playerCategoryTabs"
-
+        android:layout_below="@id/textSelectedItems"
         app:tabTextColor="#FFF"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,6 +41,37 @@
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/playerCategoryTabs"/>
+        android:layout_below="@+id/playerCategoryTabs"
+        android:layout_above="@+id/LL"/>
+
+    <LinearLayout
+        android:id="@+id/LL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/credits_left"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Credits Left : 1000"
+            android:textSize="18dp"
+            android:gravity="center"
+            android:textColor="#FFF"
+            android:background="#aaaaaa"/>
+
+        <Button
+            android:id="@+id/next_page"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Next"
+            android:textColor="#FFF"
+            android:textSize="18dp"
+            android:drawableRight="@drawable/ic_right_arrow"
+            android:background="#00FF00"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

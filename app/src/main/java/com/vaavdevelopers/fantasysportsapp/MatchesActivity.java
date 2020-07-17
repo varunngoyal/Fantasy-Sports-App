@@ -111,6 +111,7 @@ public class MatchesActivity extends AppCompatActivity implements MatchEventList
 
         Intent intent = new Intent(MatchesActivity.this, TeamActivity.class);
         intent.putExtra("MatchId", matchesIds.get(position));
+        intent.putExtra("MatchObject", matchesArrayList.get(position));
         startActivity(intent);
 
     }

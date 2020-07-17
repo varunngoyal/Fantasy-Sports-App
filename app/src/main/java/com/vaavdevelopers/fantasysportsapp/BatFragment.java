@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,18 +32,20 @@ import static com.vaavdevelopers.fantasysportsapp.TeamActivity.matchId;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BatFragment extends Fragment implements TeamPlayerAdapter.onTeamPlayerClickListener{
+public class BatFragment extends Fragment{
 
     RecyclerView recyclerView;
     TeamPlayerAdapter teamPlayerAdapter;
     FirebaseFirestore db;
     Drawable typeIcon;
+    private TextView creditsLeft, selectedItems;
+    ArrayList<TeamPlayer> playerArrayList1;
+
+
 
     public BatFragment() {
         // Required empty public constructor
-
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -53,6 +56,8 @@ public class BatFragment extends Fragment implements TeamPlayerAdapter.onTeamPla
         recyclerView = view.findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),
                 RecyclerView.VERTICAL, false));
+        selectedItems = getActivity().findViewById(R.id.textSelectedItems);
+        creditsLeft = getActivity().findViewById(R.id.credits_left);
 
         typeIcon = getResources().getDrawable(R.drawable.bat_icon, null);
 
@@ -73,12 +78,18 @@ public class BatFragment extends Fragment implements TeamPlayerAdapter.onTeamPla
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()) {
-                    ArrayList<TeamPlayer> playerArrayList1;
                     playerArrayList1 = new ArrayList<>();
                     for( TeamPlayer player : task.getResult().toObjects(TeamPlayer.class)) {
                         playerArrayList1.add(player);
                     }
-                    teamPlayerAdapter = new TeamPlayerAdapter(playerArrayList1, typeIcon, BatFragment.this);
+                    teamPlayerAdapter = new TeamPlayerAdapter(playerArrayList1, typeIcon);
+                    teamPlayerAdapter.setSelectionListener(new TeamPlayerAdapter.selectionListener() {
+                        @Override
+                        public void reflectChanges(int position, boolean isSelected) {
+                            reflectChangesDefined(position, isSelected);
+                        }
+                    });
+
                     recyclerView.setAdapter(teamPlayerAdapter);
 
                 }  else {
@@ -91,8 +102,22 @@ public class BatFragment extends Fragment implements TeamPlayerAdapter.onTeamPla
         return view;
     }
 
-    @Override
-    public void onTeamPlayerClick(int position) {
-        Toast.makeText(getContext(), position+" Clicked!", Toast.LENGTH_SHORT).show();
+
+    private void reflectChangesDefined(int position, boolean isSelected) {
+        Toast.makeText(getContext(),
+                position+" Clicked!", Toast.LENGTH_SHORT).show();
+
+        int currentcredits_left = Integer.parseInt(creditsLeft.getText().toString().split(":")[1].trim());
+        int currentlyselected = Integer.parseInt(selectedItems.getText().toString().split("/")[0].trim());
+        int creditUpdate = Integer.parseInt(playerArrayList1.get(position).getCredits().trim());
+
+        if(isSelected) {
+            selectedItems.setText((currentlyselected - 1)+"/11 selected");
+            creditsLeft.setText("Credits Left : "+(currentcredits_left + creditUpdate));
+        } else {
+            selectedItems.setText((currentlyselected + 1)+"/11 selected");
+            creditsLeft.setText("Credits Left : "+(currentcredits_left - creditUpdate));
+        }
     }
+
 }

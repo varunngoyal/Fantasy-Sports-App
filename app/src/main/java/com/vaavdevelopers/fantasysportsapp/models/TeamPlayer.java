@@ -6,9 +6,18 @@ public class TeamPlayer {
     String team;
     String credits;
     String type;
+    boolean isChecked;
 
     public TeamPlayer() {
 
+    }
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
     }
 
     public TeamPlayer(String name, String team, String credits, String type) {
@@ -16,6 +25,7 @@ public class TeamPlayer {
         this.team = team;
         this.credits = credits;
         this.type = type;
+        this.isChecked = false;
     }
 
     public String getName() {
